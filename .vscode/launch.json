@@ -5,6 +5,36 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Python: Current File With Args",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "args": ["-SourceFile",
+            "Z:\\BRM2_8\\P200_Dev\\P200_SW_Dev\\P200_SW\\pf\\01_AppLyr\\Sys_Ctrl\\ADtRp\\src\\ADtRp_Report_cc.c",
+            "-Command",
+            "test",
+            "-OutputFile",
+            "test.json".
+            "-Xclang",
+            "-fsyntax-only",
+            "-nobuiltininc",
+            "-Wno-parentheses-equality",
+            "-IC:\\Users\\ITQ2CS\\AppData\\Local\\Temp\\tmpD282.tmp",
+            "-IC:\\Users\\ITQ2CS\\AppData\\Local\\Temp\\tmpA1C.tmp",
+            "-includeC:\\Users\\ITQ2CS\\AppData\\Local\\Temp\\tmpA1C.tmp\\_PreDefinedMarco.h"]
+        },
+        {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "python": "${command:python.interpreterPath}"
+        },
+        {
             "name": "PowerShell: Launch Current File",
             "type": "PowerShell",
             "request": "launch",
@@ -16,7 +46,7 @@
             "type": "PowerShell",
             "request": "launch",
             "script": "$env:LocalDebugMode=1;${file}",
-            "cwd": "${file}",            
+            "cwd": "${file}",
             "createTemporaryIntegratedConsole": true
         }
     ]
