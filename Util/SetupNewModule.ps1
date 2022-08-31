@@ -4,7 +4,15 @@ param(
     $ModuleName
 )
 $initLocation=Get-Location
-$moduleBaseName="CCodeAnalyzer"
+$gitUrl=(git remote get-url --all origin)
+Write-Host "Current git url is $gitUrl"
+$gitRepoName=($gitUrl.replace(".git","") -split "/")[-1]
+Write-Host "Current git repo name is $gitRepoName"
+$moduleBaseName=$gitRepoName.Replace("-","")
+Write-Host "Current module base name $moduleBaseName"
+$gitHostName=($gitUrl.replace(".git","") -split "/")[-2]
+
+
 Set-Location "$PSScriptRoot/../"
 New-Item -Path "./$moduleBaseName/$moduleBaseName-$ModuleName" -ItemType Directory -Force
 New-Item -Path "./$moduleBaseName/$moduleBaseName-$ModuleName/$moduleBaseName-$ModuleName.Tests.ps1" -ItemType File -Force
@@ -12,7 +20,7 @@ New-Item -Path "./$moduleBaseName/$moduleBaseName-$ModuleName/Module" -ItemType 
 New-Item -Path "./$moduleBaseName/$moduleBaseName-$ModuleName/Module/$moduleBaseName-$ModuleName.psm1" -ItemType File -Force
 # New-Item -Path "./$moduleBaseName/$moduleBaseName-$ModuleName/Script" -ItemType Directory -Force
 # New-Item -Path "./$moduleBaseName/$moduleBaseName-$ModuleName/Script/$moduleBaseName-$ModuleName.Classes.ps1" -ItemType File -Force
-New-ModuleManifest -Path "./$moduleBaseName/$moduleBaseName-$ModuleName/$moduleBaseName-$ModuleName.psd1" -Author "LeanMeatFloss" -CompanyName "Song" -Copyright @"
+New-ModuleManifest -Description "$moduleBaseName"  -Path "./$moduleBaseName/$moduleBaseName-$ModuleName/$moduleBaseName-$ModuleName.psd1" -Author "LeanMeatFloss" -CompanyName "Song" -Copyright @"
 MIT License
 
 Copyright (c) 2022 Hansong Li
@@ -34,5 +42,5 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-"@ -FunctionsToExport ("*") -CmdletsToExport ("*") -LicenseUri 'https://raw.githubusercontent.com/LeanMeatFloss/CCodeAnalyzer/main/LICENSE' -RootModule "Module/$moduleBaseName-$ModuleName.psm1"  -NestedModules "$moduleBaseName-Basic"
+"@ -FunctionsToExport ("*") -CmdletsToExport ("*") -LicenseUri "https://raw.githubusercontent.com/$gitHostName/$gitRepoName/main/LICENSE" -RootModule "Module/$moduleBaseName-$ModuleName.psm1"  -NestedModules "$moduleBaseName-Basic"
 Set-Location $initLocation
