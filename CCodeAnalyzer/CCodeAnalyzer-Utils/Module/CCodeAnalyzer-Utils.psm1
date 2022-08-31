@@ -22,7 +22,11 @@ function Get-ChildItemAdvance{
         $ReturnFilter={return $true}
     )
     process{
-        Get-ChildItem $Directory -Directory|Where-Object $FolderFilter|Get-ChildItemAdvance -FolderFilter $FolderFilter -ReturnFilter $ReturnFilter
-        Get-ChildItem $Directory|Where-Object $ReturnFilter
+        $subdirs=@()+(Get-ChildItem $Directory -Directory)
+        if($subdirs -and $subdirs.Count -gt 0){
+            $subdirs |Where-Object $FolderFilter|Get-ChildItemAdvance -FolderFilter $FolderFilter -ReturnFilter $ReturnFilter
+        }
+        # Get-ChildItem $Directory -Directory|Where-Object $FolderFilter|Get-ChildItemAdvance -FolderFilter $FolderFilter -ReturnFilter $ReturnFilter
+        Get-ChildItem $Directory -File|Where-Object $ReturnFilter
     }
 }
